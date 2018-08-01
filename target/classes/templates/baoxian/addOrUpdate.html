@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户详情查看</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/jquery-3.3.1/jquery-3.3.1.js}"></script>
+</head>
+
+<body>
+<form class="layui-form"    id="baoxianFrom"  method="post">
+    <input type="text" name="baoxian.id" th:value="*{baoxian.id}" >
+    <input type="text" name="baoxian.status" th:value="*{baoxian.status}" >
+    <input type="text" name="chanxian.id" th:value="*{chanxian.id}" >
+    <input type="text" name="chanxian.bxId" th:value="*{chanxian.bxId}" >
+    <input type="text" name="shouxian.id" th:value="*{shouxian.id}" >
+    <input type="text" name="shouxian.bxId" th:value="*{shouxian.bxId}">
+
+    <input type="text" name="baoxian.deptcode" value="260678000000800" >
+
+    <input type="text" name="addOrUpdateType" th:value="*{addOrUpdateType}">
+    <div class="container">
+        <!-- 新增 -->
+        <div class="part addupdatepart">
+            <p class="contTitle">新增</p>
+            <div class="infoShow">
+                <div class="layui-form-item">
+                    <label class="layui-form-label addlabelui">报送到:</label>
+                    <div class="layui-input-block addinputui">
+                        <select name="baoxian.reportplace"    autocomplete="off">
+                            <option value="01">深圳</option>
+                            <option value="02">非深圳</option>
+                        </select>
+                    </div>
+                </div>
+                <p>单位：万元</p>
+            </div>
+        </div>
+
+        <!-- 查看详情 -->
+        <div class="part viewpart">
+            <p class="contTitle">查看详情</p>
+            <div class="infoShow">
+                <p class="contTitle">填报信息</p>
+                <p>报送到：<span>北京</span></p>
+            </div>
+        </div>
+        <!-- 审核 -->
+        <div class="part auditpart">
+            <p class="contTitle">审核</p>
+            <div class="infoShow">
+                <p class="contTitle">填报信息</p>
+                <p>报送到：<span>北京</span></p>
+            </div>
+        </div>
+
+        <div>
+            <!-- 表头 -->
+            <div class="layui-row rowTitle">
+                <div class="layui-col-xs4"><p>基本信息</p></div>
+                <div class="layui-col-xs4"><p>产险业务</p></div>
+                <div class="layui-col-xs4"><p>寿险业务</p></div>
+            </div>
+            <!-- 详情 -->
+            <div class="layui-row rowDetails">
+                <!-- 基本信息 -->
+                <div class="layui-col-xs4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">填报年份</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.year"  id="baoxianYearChosen"  th:value="*{baoxian.year}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">填报季度</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.month" th:value="*{baoxian.month}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">中介机构名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="baoxian.deptname" th:value="*{baoxian.deptname}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">机构人数-本季度末</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.deptpeoplenow" th:value="*{baoxian.deptpeoplenow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">机构人数-上年同期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.deptpeoplepre" th:value="*{baoxian.deptpeoplepre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">持证人数-本季度末</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.certificatepeoplenow" th:value="*{baoxian.certificatepeoplenow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">持证人数-上年同期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.certificatepeoplepre" th:value="*{baoxian.certificatepeoplepre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费金额-本年累计</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.premiumnow" th:value="*{baoxian.premiumnow}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费金额-上年同期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.premiumpre" th:value="*{baoxian.premiumpre}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">佣金金额-本年累计</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.turnovernow" th:value="*{baoxian.turnovernow}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">佣金金额-上年同期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.turnoverpre" th:value="*{baoxian.turnoverpre}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">利润金额-本年累计</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.profitnow" th:value="*{baoxian.profitnow}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">利润金额-上年同期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="baoxian.profitpre" th:value="*{baoxian.profitpre}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <!-- 产险业务 -->
+                <div class="layui-col-xs4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">区域范围</label>
+                        <div class="layui-input-block">
+                            <select name="chanxian.arearange" th:value="*{chanxian.arearange}" required  lay-verify="required" autocomplete="off">
+                                <option value="01">深圳</option>
+                                <option value="02">非深圳</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保险公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="chanxian.insname" th:value="*{chanxian.insname}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">险种名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="chanxian.insurancename" th:value="*{chanxian.insurancename}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="chanxian.premiumnow" th:value="*{chanxian.premiumnow}" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" required lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">退保保费-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumsurrender" th:value="*{chanxian.premiumsurrender}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">批增保费-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumadd" th:value="*{chanxian.premiumadd}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">批减保费-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumminus" th:value="*{chanxian.premiumminus}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费-累计</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumpre" th:value="*{chanxian.premiumpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">佣金-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionnow" th:value="*{chanxian.commissionnow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">退保佣金-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionsurrender" th:value="*{chanxian.commissionsurrender}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">批增佣金-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionadd" th:value="*{chanxian.commissionadd}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">批减佣金-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionminus" th:value="*{chanxian.commissionminus}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">再保佣金-本期</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionreinsurance" th:value="*{chanxian.commissionreinsurance}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">佣金-累计</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.commissionpre" th:value="*{chanxian.commissionpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期网络保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumnet" th:value="*{chanxian.premiumnet}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期电销保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="chanxian.premiumtel" th:value="*{chanxian.premiumtel}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <!-- 寿险业务 -->
+                <div class="layui-col-xs4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">区域范围</label>
+                        <div class="layui-input-block">
+                            <select name="shouxian.arearange" th:value="*{shouxian.arearange}" required  lay-verify="required" autocomplete="off">
+                                <option value="01">深圳</option>
+                                <option value="02">非深圳</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保险公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="shouxian.insname" th:value="*{shouxian.insname}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">险种名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="shouxian.insurancename" th:value="*{shouxian.insurancename}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期新单保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumnow" th:value="*{shouxian.premiumnow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">累计新单保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumpre" th:value="*{shouxian.premiumpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期续期保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumrenewalnow" th:value="*{shouxian.premiumrenewalnow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">累计续期保费</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumrenewalpre" th:value="*{shouxian.premiumrenewalpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期新单佣金</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.commissionnow" th:value="*{shouxian.commissionnow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">累计新单佣金</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.commissionpre" th:value="*{shouxian.commissionpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">本期续期佣金</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.commissionrenewalnow" th:value="*{shouxian.commissionrenewalnow}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">累计续期佣金</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.commissionrenewalpre" th:value="*{shouxian.commissionrenewalpre}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费-网销</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumnet" th:value="*{shouxian.premiumnet}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">保费-电销</label>
+                        <div class="layui-input-block">
+                            <input type="number" onkeyup= "if( ! /^-?\d+\.?\d{0,3}$/.test(this.value)){ var s = this.value;this.value=s.substring(0,s.length-1);}" name="shouxian.premiumtel" th:value="*{shouxian.premiumtel}" required  lay-verify="required" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增- add -->
+            <div class="part addpart">
+                <div class="layui-form-item actBtnContainer">
+                    <button lay-submit lay-filter="*" class="layui-btn layui-btn-lg layui-btn-normal">提交</button>
+                    <button type="reset" class="formreset layui-btn layui-btn-primary layui-btn-lg">清空</button>
+                </div>
+                <div class="goback gobackBtn" >&lt;&lt;返回</div>
+            </div>
+
+            <!-- 修改 -->
+            <div class="part updatepart">
+                <div class="layui-form-item actBtnContainer">
+                    <button lay-submit lay-filter="*" class="layui-btn layui-btn-lg layui-btn-normal">提交</button>
+                    <button type="reset" class="formreset layui-btn layui-btn-primary layui-btn-lg">清空</button>
+                </div>
+                <div class="goback gobackBtn">&lt;&lt;返回</div>
+            </div>
+
+            <!-- 查看详情 -view -->
+            <div class="part viewpart">
+                <div class="otherinfo">
+                    <p class="contTitleEr">其他信息</p>
+                    <div>
+                        <div class="otherdetails">
+                            <p>填报状态：<span th:text="${baoxian.statusCn}"></span></p>
+                        </div>
+                        <div class="otherdetails">
+                            <p>填报人：<span th:text="${baoxian.createman}">Sebastian</span></p>
+                            <p>填报时间：<span th:text="${#dates.format(baoxian.createtime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                        </div>
+                        <div class="otherdetails">
+                            <p>审核人：<span th:text="${baoxian.auditman}">Sebastian</span></p>
+                            <p>审核时间/报送时间：<span th:text="${#dates.format(baoxian.updatetime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gobackBtn gobackBox layui-btn-normal">&lt;&lt;返回</div>
+            </div>
+
+            <!-- 审核 -->
+            <div class="part auditpart">
+                <div class="otherinfo">
+                    <p class="contTitleEr">其他信息</p>
+                    <div>
+                        <div class="otherdetails">
+                            <p>填报状态：<span th:text="${baoxian.statusCn}"></span></p>
+                        </div>
+                        <div class="otherdetails">
+                            <p>填报人: <span th:text="${baoxian.createman}">Sebastian</span></p>
+                            <p>填报时间：<span th:text="${#dates.format(baoxian.createtime, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="actBtnContainer">
+                    <p class="layui-btn layui-btn-lg layui-btn-normal" id="auditSucceed">审核并报送</p>
+                    <p class="layui-btn layui-btn-primary layui-btn-lg" id="auditFail">驳回</p>
+                    <p class="gobackBtn gobackBox layui-btn layui-btn-normal">&lt;&lt;返回</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+</body>
+
+<script>
+
+    // 使用form
+    layui.use(['form','jquery'], function(){
+        var form = layui.form, //只有执行了这一步，部分表单元素才会自动修饰成功
+            $=layui.jquery;
+        // form.render();
+
+        // 根据参数显示对应界面
+        if( getQueryString('addOrUpdateType')=='add' ){
+            $("input").attr("disabled",false)
+            $("select").attr("disabled",false)
+            $(".addpart").show();
+            $(".addupdatepart").show();
+
+        }else if( getQueryString('addOrUpdateType')=='update' ){
+            $("input").attr("disabled",false)
+            $("select").attr("disabled",false)
+            $(".updatepart").show();
+            $(".addupdatepart").show();
+        }else if( getQueryString('addOrUpdateType')=='view' ){
+            $("input").attr("disabled",true)
+            $("select").attr("disabled",true)
+            $(".viewpart").show();
+        }else{
+            $("input").attr("disabled",true)
+            $("select").attr("disabled",true)
+            $(".auditpart").show();
+        }
+
+        // 提交
+        form.on('submit(*)', function(data){
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                url: "/baoxian/doAddOrUpdate",
+                type: "post",
+                data:$('#baoxianFrom').serialize(),
+                dataType: "json",
+                success: function(data){
+                    alert("提交成功")
+//                    history.go(-1);
+                    window.location.href="/baoxian/list"
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        // 清空
+        $(".formreset").on("click",function(){
+            layer.confirm('确认要清空全部已输入内容？', {
+                btn : [ '确定', '取消' ]
+            }, function(index) {
+                layer.close(index);
+            });
+        });
+        // 返回
+        $('.gobackBtn').on('click',function(){
+            window.history.go(-1);
+        });
+
+        // 审核并报送
+        $("#auditSucceed").on("click",function(){
+            $.ajax({
+                url: "/baoxian/auditStatus",
+                type: "post",
+                data:{
+                    'operId': $("input[name='baoxian.id']").val(),
+                    'status':'auditSuccess'
+                },
+                dataType: "json",
+                success: function(data){
+                    if(1==data.code){
+                        layerui.alert("报送成功")
+                    }else{
+                        layerui.alert(data.msg);
+                    }
+                    window.location.href="/baoxian/list"
+                    console.log(data)
+                }
+            });
+        });
+        // 驳回--auditFail
+        $("#auditFail").on("click",function(){
+            $.ajax({
+                url: "/baoxian/auditStatus",
+                type: "post",
+                data:{
+                    'operId': $("input[name='baoxian.id']").val(),
+                    'status':'reject'
+                },
+                dataType: "json",
+                success: function(data){
+                    console.log(data)
+                    layerui.alert("驳回成功")
+                    window.location.href="/baoxian/list"
+                }
+            });
+        });
+
+    });
+
+
+    // 获取URL参数值
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+
+//    //年选择器
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#baoxianYearChosen',
+            type: 'year'
+        });
+    });
+
+//////////////////////////////////////////////////////
+    function submitData(){
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/baoxian/doAddOrUpdate" ,//url
+            data: $('#baoxianFrom').serialize(),
+            success: function (data) {
+                console.log(data);//打印服务端返回的数据(调试用)
+                if(data==1){
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);  // 关闭layer
+                    parent.layer.msg("修改成功", {icon: 6});
+                    parent.location.reload();
+                }else{
+                    parent.layer.msg("修改失败", {icon: 5});
+                }
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+
+    }
+
+    function save(){
+        var name = $("#name").val();
+        var id = $("#id").val();
+        var age = $("#age").val();
+        $.ajax({
+            url: "/userUpdate",
+            type: "POST",
+            data:{"id":id,"name":name,"age":age},
+            dataType: "json",
+            success: function(data){
+                if(data==1){
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);  // 关闭layer
+                    parent.layer.msg("修改成功", {icon: 6});
+                    parent.location.reload();
+                }else{
+                    parent.layer.msg("修改失败", {icon: 5});
+                }
+            }
+        });
+    }
+
+</script>
+</html>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaisagroup.baoxian.mapper.ChanXianMapper">
+  <resultMap id="BaseResultMap" type="com.kaisagroup.baoxian.entity.ChanXian">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="bx_id" jdbcType="VARCHAR" property="bxId" />
+    <result column="arearange" jdbcType="VARCHAR" property="arearange" />
+    <result column="insname" jdbcType="VARCHAR" property="insname" />
+    <result column="insurancename" jdbcType="VARCHAR" property="insurancename" />
+    <result column="premiumnow" jdbcType="DECIMAL" property="premiumnow" />
+    <result column="premiumsurrender" jdbcType="DECIMAL" property="premiumsurrender" />
+    <result column="premiumadd" jdbcType="DECIMAL" property="premiumadd" />
+    <result column="premiumminus" jdbcType="DECIMAL" property="premiumminus" />
+    <result column="premiumpre" jdbcType="DECIMAL" property="premiumpre" />
+    <result column="commissionnow" jdbcType="DECIMAL" property="commissionnow" />
+    <result column="commissionsurrender" jdbcType="DECIMAL" property="commissionsurrender" />
+    <result column="commissionadd" jdbcType="DECIMAL" property="commissionadd" />
+    <result column="commissionminus" jdbcType="DECIMAL" property="commissionminus" />
+    <result column="commissionreinsurance" jdbcType="DECIMAL" property="commissionreinsurance" />
+    <result column="commissionpre" jdbcType="DECIMAL" property="commissionpre" />
+    <result column="premiumnet" jdbcType="DECIMAL" property="premiumnet" />
+    <result column="premiumtel" jdbcType="DECIMAL" property="premiumtel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bx_id, arearange, insname, insurancename, premiumnow, premiumsurrender, premiumadd, 
+    premiumminus, premiumpre, commissionnow, commissionsurrender, commissionadd, commissionminus, 
+    commissionreinsurance, commissionpre, premiumnet, premiumtel
+  </sql>
+  <select id="selectByExample" parameterType="com.kaisagroup.baoxian.entity.ChanXianExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bx_chanxian
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bx_chanxian
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bx_chanxian
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteByBxId" parameterType="java.lang.String">
+    delete from bx_chanxian
+    where bx_id = #{bxId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.kaisagroup.baoxian.entity.ChanXian">
+    insert into bx_chanxian (id, bx_id, arearange, 
+      insname, insurancename, premiumnow, 
+      premiumsurrender, premiumadd, premiumminus, 
+      premiumpre, commissionnow, commissionsurrender, 
+      commissionadd, commissionminus, commissionreinsurance, 
+      commissionpre, premiumnet, premiumtel
+      )
+    values (#{id,jdbcType=VARCHAR}, #{bxId,jdbcType=VARCHAR}, #{arearange,jdbcType=VARCHAR}, 
+      #{insname,jdbcType=VARCHAR}, #{insurancename,jdbcType=VARCHAR}, #{premiumnow,jdbcType=DECIMAL}, 
+      #{premiumsurrender,jdbcType=DECIMAL}, #{premiumadd,jdbcType=DECIMAL}, #{premiumminus,jdbcType=DECIMAL}, 
+      #{premiumpre,jdbcType=DECIMAL}, #{commissionnow,jdbcType=DECIMAL}, #{commissionsurrender,jdbcType=DECIMAL}, 
+      #{commissionadd,jdbcType=DECIMAL}, #{commissionminus,jdbcType=DECIMAL}, #{commissionreinsurance,jdbcType=DECIMAL}, 
+      #{commissionpre,jdbcType=DECIMAL}, #{premiumnet,jdbcType=DECIMAL}, #{premiumtel,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaisagroup.baoxian.entity.ChanXian">
+    insert into bx_chanxian
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bxId != null">
+        bx_id,
+      </if>
+      <if test="arearange != null">
+        arearange,
+      </if>
+      <if test="insname != null">
+        insname,
+      </if>
+      <if test="insurancename != null">
+        insurancename,
+      </if>
+      <if test="premiumnow != null">
+        premiumnow,
+      </if>
+      <if test="premiumsurrender != null">
+        premiumsurrender,
+      </if>
+      <if test="premiumadd != null">
+        premiumadd,
+      </if>
+      <if test="premiumminus != null">
+        premiumminus,
+      </if>
+      <if test="premiumpre != null">
+        premiumpre,
+      </if>
+      <if test="commissionnow != null">
+        commissionnow,
+      </if>
+      <if test="commissionsurrender != null">
+        commissionsurrender,
+      </if>
+      <if test="commissionadd != null">
+        commissionadd,
+      </if>
+      <if test="commissionminus != null">
+        commissionminus,
+      </if>
+      <if test="commissionreinsurance != null">
+        commissionreinsurance,
+      </if>
+      <if test="commissionpre != null">
+        commissionpre,
+      </if>
+      <if test="premiumnet != null">
+        premiumnet,
+      </if>
+      <if test="premiumtel != null">
+        premiumtel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bxId != null">
+        #{bxId,jdbcType=VARCHAR},
+      </if>
+      <if test="arearange != null">
+        #{arearange,jdbcType=VARCHAR},
+      </if>
+      <if test="insname != null">
+        #{insname,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancename != null">
+        #{insurancename,jdbcType=VARCHAR},
+      </if>
+      <if test="premiumnow != null">
+        #{premiumnow,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumsurrender != null">
+        #{premiumsurrender,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumadd != null">
+        #{premiumadd,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumminus != null">
+        #{premiumminus,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumpre != null">
+        #{premiumpre,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionnow != null">
+        #{commissionnow,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionsurrender != null">
+        #{commissionsurrender,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionadd != null">
+        #{commissionadd,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionminus != null">
+        #{commissionminus,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionreinsurance != null">
+        #{commissionreinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionpre != null">
+        #{commissionpre,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumnet != null">
+        #{premiumnet,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumtel != null">
+        #{premiumtel,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaisagroup.baoxian.entity.ChanXian">
+    update bx_chanxian
+    <set>
+      <if test="bxId != null">
+        bx_id = #{bxId,jdbcType=VARCHAR},
+      </if>
+      <if test="arearange != null">
+        arearange = #{arearange,jdbcType=VARCHAR},
+      </if>
+      <if test="insname != null">
+        insname = #{insname,jdbcType=VARCHAR},
+      </if>
+      <if test="insurancename != null">
+        insurancename = #{insurancename,jdbcType=VARCHAR},
+      </if>
+      <if test="premiumnow != null">
+        premiumnow = #{premiumnow,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumsurrender != null">
+        premiumsurrender = #{premiumsurrender,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumadd != null">
+        premiumadd = #{premiumadd,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumminus != null">
+        premiumminus = #{premiumminus,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumpre != null">
+        premiumpre = #{premiumpre,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionnow != null">
+        commissionnow = #{commissionnow,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionsurrender != null">
+        commissionsurrender = #{commissionsurrender,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionadd != null">
+        commissionadd = #{commissionadd,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionminus != null">
+        commissionminus = #{commissionminus,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionreinsurance != null">
+        commissionreinsurance = #{commissionreinsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionpre != null">
+        commissionpre = #{commissionpre,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumnet != null">
+        premiumnet = #{premiumnet,jdbcType=DECIMAL},
+      </if>
+      <if test="premiumtel != null">
+        premiumtel = #{premiumtel,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaisagroup.baoxian.entity.ChanXian">
+    update bx_chanxian
+    set bx_id = #{bxId,jdbcType=VARCHAR},
+      arearange = #{arearange,jdbcType=VARCHAR},
+      insname = #{insname,jdbcType=VARCHAR},
+      insurancename = #{insurancename,jdbcType=VARCHAR},
+      premiumnow = #{premiumnow,jdbcType=DECIMAL},
+      premiumsurrender = #{premiumsurrender,jdbcType=DECIMAL},
+      premiumadd = #{premiumadd,jdbcType=DECIMAL},
+      premiumminus = #{premiumminus,jdbcType=DECIMAL},
+      premiumpre = #{premiumpre,jdbcType=DECIMAL},
+      commissionnow = #{commissionnow,jdbcType=DECIMAL},
+      commissionsurrender = #{commissionsurrender,jdbcType=DECIMAL},
+      commissionadd = #{commissionadd,jdbcType=DECIMAL},
+      commissionminus = #{commissionminus,jdbcType=DECIMAL},
+      commissionreinsurance = #{commissionreinsurance,jdbcType=DECIMAL},
+      commissionpre = #{commissionpre,jdbcType=DECIMAL},
+      premiumnet = #{premiumnet,jdbcType=DECIMAL},
+      premiumtel = #{premiumtel,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

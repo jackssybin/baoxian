@@ -1,0 +1,122 @@
+/* ----------listPage.html------ */
+/* container */
+.container{
+    margin:30px 20px;
+}
+/* top */
+.contTitle{
+    font-size: 22px;
+    color:#000;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.contTitleEr{
+    font-size: 16px;
+    color:#000;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.firstLabel{
+    padding-left: 0;
+    width: auto;
+}
+.addBaoxianBtn{
+    margin-left:70px;
+    padding:0 40px;
+}
+/* ----------------addOrUpdate.html------------- */
+.rowTitle p{
+    text-align: center;
+    border:1px solid #ccc;
+    padding:8px;
+    border-left:none;
+    color:#1C5AF2;
+    font-weight: bold;
+}
+.rowTitle .layui-col-xs4:first-child p{
+    border-left: 1px solid #ccc;
+}
+.infoShow {
+    display: flex;
+    justify-content:space-between;
+}
+.actBtnContainer{
+    margin-top: 60px;
+    text-align: center;
+}
+.goback{
+    cursor: pointer;
+    text-align: center;
+    margin:35px 0 50px;
+    color:#1C5AF2;
+}
+.actBtnContainer .layui-btn-lg{
+    margin:0 50px;
+    height: 38px;
+    line-height: 38px;
+    width:130px;
+}
+.rowDetails .layui-form-item{
+    margin-bottom: 0;
+}
+.rowDetails .layui-form-label{
+    border:1px solid #e6e6e6;
+    padding: 8px 14px;
+    width:125px;
+}
+.rowDetails .layui-input-block{
+    margin-left: 155px;
+}
+.addlabelui{
+    padding:9px 0;
+    text-align: left;
+    width: auto;
+}
+.addinputui{
+    margin-left: 60px;
+}
+
+/* detail.html */
+.otherinfo{
+    margin-top:30px;
+}
+.otherdetails{
+    display: flex;
+}
+.otherdetails p{
+    margin-bottom:10px;
+    width:30%;
+}
+.gobackBox{
+    cursor: pointer;
+    text-align: center;
+    margin:35px auto 50px;
+    color:#fff;
+    width: 120px;
+    height: 38px;
+    line-height: 38px;
+    border-radius: 6px;
+}
+
+.part{
+    display: none;
+}
+/* 新增 */
+/* .addpart{
+    display: block;
+} */
+
+/* 修改 */
+/* .updatepart{
+    display: block;
+} */
+
+/* 查看详情 */
+/* .viewpart{
+    display: block;
+} */
+
+/* 审核 */
+/* .auditpart{
+    display: block;
+} */

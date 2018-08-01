@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"></meta>
+     <meta http-equiv="pragma" content="no-cache"></meta>
+     <meta http-equiv="cache-control" content="no-cache"></meta>
+     <meta http-equiv="expires" content="0"></meta>
+    <title>保险列表</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/date.js}"></script>
+
+</head>
+<body>
+<div class="container">
+    <p class="contTitle">中介业务信息平台对接</p>
+    <div class="demoTable layui-form">
+        <!-- 填报年份 -->
+        <div class="layui-inline">
+            <label class="layui-form-label firstLabel">填报年份</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="chooseYear" name="year" placeholder="">
+            </div>
+        </div>
+        <!-- 填报季度 -->
+        <div class="layui-inline">
+            <label class="layui-form-label">填报季度</label>
+            <div class="layui-input-inline">
+                <select name="month" id="month" lay-verify="required">
+                    <option value="">全部</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+        <!-- 报送到 -->
+        <div class="layui-inline">
+            <label class="layui-form-label">报送到</label>
+            <div class="layui-input-inline">
+                <select name="reportplace" id="reportplace" lay-verify="required">
+                    <option value="beijing">北京</option>
+                    <option value="shanghai">上海</option>
+                    <option value="shenzhen">深圳</option>
+                </select>
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-normal addBaoxianBtn" id="addBaoxianBtn">新增</button>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+    <table id="test" lay-filter="test" ></table>
+    <!--操作列-->
+    <script type="text/html" id="barDemo">
+
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="view">查看</a>
+            {{#  if(d.status == 'toAudit' || d.status == 'reject'){ }}
+            <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            {{#  } }}
+
+            {{#  if(d.status == 'toAudit'){ }}
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="audit">审核</a>
+            {{#  } }}
+
+
+
+    </script>
+
+</div>
+
+    <script>
+
+        // table
+        layui.use('table', function(){
+            var pageNum =1;
+            var pageSize=10
+            var listurl ="/baoxian/listAll/"+pageNum+"/"+pageSize
+            var table = layui.table;
+            table.render({
+                id:"id",
+                elem: '#test',
+                url:listurl,
+                method: 'post',
+                page: true,
+                id: 'testReload',
+                cols: [
+                    [
+                        { type: 'numbers', width:50, title: '编号',align: 'center'},
+//                        {field:'deptcode', width:150, title: '上报机构id',align: 'center'},
+                        {field:'year', width:100, title: '填报年份',align: 'center'},
+                        {field:'month', width:100, title: '填报季度',align: 'center'},
+                        {field:'deptname', width:120, title: '中介机构名称',align: 'center'},
+                        {field:'statusCn', width:100, title: '状态',align: 'center'},
+                        {field:'createman', width:100, title: '填报人',align: 'center'},
+                        {field:'createtime', width:120, title: '填报日期',align: 'center'
+                            ,templet: function(d){
+                            return  Format(d.createtime,"yyyy-MM-dd ") ;
+                            }
+                        },
+                        {field:'auditman', width:100, title: '审核人',align: 'center'},
+                        {field:'updatetime', width:120, title: '审核时间',align: 'center'
+                            ,templet: function(d){
+                            return  Format(d.updatetime,"yyyy-MM-dd ") ;
+                        }
+                        },
+                        {field:'', align: 'center',width:'220',title: '操作',toolbar:"#barDemo"}
+                    ]
+                ]
+                ,done: function(res, curr, count){
+//                    $("[data-field='id']").css('display','none');
+                    console.log(res)
+                    console.log("curr:"+curr)
+                    console.log("count:"+count);
+                }
+            });
+            /*重新加载数据表格*/
+            var $ = layui.$, active = {
+                reload: function(){
+                    var yearVal = $('#year').val();
+                    var monthVal = $('#month').val();
+                    var reportplaceVal = $('#reportplace').val();
+                    console.log("yearVal="+yearVal+" monthVal="+monthVal+" reportplace="+reportplaceVal);
+                    table.reload('testReload', {
+                        where: {
+                            year: yearVal,
+                            month: monthVal,
+                            reportplace: reportplaceVal
+                        }
+                    });
+                }
+            };
+
+            /*绑定搜索点击事件*/
+            // $('.demoTable .layui-btn').on('click', function(){
+            //     var type = $(this).data('type');
+            //     active[type] ? active[type].call(this) : '';
+            // });
+
+            // 新增
+            $('#addBaoxianBtn').on('click', function(){
+//                window.location.href="addOrUpdate.html?addOrUpdateType=add";
+                 window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=add";
+            });
+            //监听工具条
+            //监听工具条
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                console.log("工具栏："+data)
+                console.log(data.status)
+                if(obj.event === 'view'){ //查看
+
+//                    window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=view&id="+data.id;
+                } else if(obj.event === 'del'){ //删除
+                    layer.confirm('确认要删除此条信息么？', {
+                        btn : [ '确定', '取消' ]
+                    }, function(index) {
+                        $.ajax({
+                            url: "/baoxian/deleteBaoXianById",
+                            type: "post",
+                            data:{ 'operId':data.id },
+                            dataType: "json",
+                            success: function(data){
+                                //layui.msg('删除成功');
+                                window.location.reload();
+                            }
+                        });
+                        layer.close(index);
+                    });
+
+                } else if(obj.event === 'update'){ //编辑
+                    window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=update&id="+data.id;
+
+                }else if( obj.event === 'audit' ){ //审核
+                    window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=audit&id="+data.id;
+                }
+            });
+        });
+
+        //年选择器
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseYear'
+                ,type: 'year'
+            });
+        });
+    </script>
+</body>
+</html>
