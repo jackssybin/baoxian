@@ -65,6 +65,7 @@ CREATE TABLE `bx_baoxian` (
   `reportplace` varchar(100) DEFAULT NULL COMMENT '报送地点',
   `createman` varchar(100) DEFAULT NULL COMMENT '提交人',
   `auditman` varchar(100) DEFAULT NULL COMMENT '审核人',
+  `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `status` varchar(10) DEFAULT NULL COMMENT '状态',
   `createtime` datetime DEFAULT NULL COMMENT '提交时间',
   `updatetime` datetime DEFAULT NULL COMMENT '审核时间',

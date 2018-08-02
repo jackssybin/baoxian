@@ -53,6 +53,57 @@ public class BaoXianApiController {
         return layuiData;
     }
 
+    @ApiOperation(value = "新增或修改保存保险")
+    @RequestMapping(path = "/doAddOrUpdateBaoXian", method={RequestMethod.POST})
+    @ResponseBody
+    public LayuiData doAddOrUpdateBaoXian(HttpServletRequest request,
+                                   BaoXian baoXian,BindingResult bindingResult) {
+        String addOrUpdateType=request.getParameter("addOrUpdateType");//新增add,修改 update,查看 view ，审核 audit
+        if(!StringUtils.isEmpty(addOrUpdateType)){
+            if(Constants.OPER_ADD.equals(addOrUpdateType)||Constants.OPER_UPDATE.equals(addOrUpdateType)){
+                this.baoXioanService.saveOrUpdateBaoXian(baoXian);
+            }
+        }
+        LayuiData layuiData =new LayuiData();
+        layuiData.setCode(1);
+        layuiData.setMsg("success");
+        return layuiData;
+    }
+
+    @ApiOperation(value = "新增或修改保存产险")
+    @RequestMapping(path = "/doAddOrUpdateChanXian", method={RequestMethod.POST})
+    @ResponseBody
+    public LayuiData doAddOrUpdateChanXian(HttpServletRequest request,
+                                          List<ChanXian> chanXianList) {
+        String addOrUpdateType=request.getParameter("addOrUpdateType");//新增add,修改 update,查看 view ，审核 audit
+        if(!StringUtils.isEmpty(addOrUpdateType)){
+            if(Constants.OPER_ADD.equals(addOrUpdateType)||Constants.OPER_UPDATE.equals(addOrUpdateType)){
+//                this.baoXioanService.saveOrUpdateChanXian(chanXian);
+            }
+        }
+        LayuiData layuiData =new LayuiData();
+        layuiData.setCode(1);
+        layuiData.setMsg("success");
+        return layuiData;
+    }
+
+    @ApiOperation(value = "新增或修改保存寿险")
+    @RequestMapping(path = "/doAddOrUpdateShouxian", method={RequestMethod.POST})
+    @ResponseBody
+    public LayuiData doAddOrUpdateShouxian(HttpServletRequest request,
+                                           List<ShouXian> shouXianList) {
+        String addOrUpdateType=request.getParameter("addOrUpdateType");//新增add,修改 update,查看 view ，审核 audit
+        if(!StringUtils.isEmpty(addOrUpdateType)){
+            if(Constants.OPER_ADD.equals(addOrUpdateType)||Constants.OPER_UPDATE.equals(addOrUpdateType)){
+//                this.baoXioanService.saveOrUpdateShouXian(shouXian);
+            }
+        }
+        LayuiData layuiData =new LayuiData();
+        layuiData.setCode(1);
+        layuiData.setMsg("success");
+        return layuiData;
+    }
+
     @ApiOperation(value = "产品列表")
     @RequestMapping(value = "listAll/{start}/{size}",method={RequestMethod.POST})
     public @ResponseBody

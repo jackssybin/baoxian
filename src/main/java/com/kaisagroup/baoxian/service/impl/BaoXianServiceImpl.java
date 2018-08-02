@@ -66,6 +66,45 @@ public class BaoXianServiceImpl  implements BaoXioanService {
     }
 
     @Override
+    public void saveOrUpdateBaoXian(BaoXian baoxian) {
+        if(StringUtils.isEmpty(baoxian.getId())){
+            String id = UuidUtil.getUuid();
+            baoxian.setId(id);
+            baoxian.setCreateman("admin");
+            baoxian.setStatus(Constants.Status.toAudit.getCode());
+            baoxian.setCreatetime(new Date());
+            this.baoXianMapper.insertSelective(baoxian);
+        }else{
+            baoxian.setUpdatetime(new Date());
+            if(!StringUtils.isEmpty(baoxian.getStatus())){
+                baoxian.setStatus(Constants.Status.toAudit.getCode());
+                baoxian.setCreatetime(new Date());
+                baoxian.setCreateman(Constants.OPER_MAN);
+            }
+            this.baoXianMapper.updateByPrimaryKeySelective(baoxian);
+        }
+    }
+
+    @Override
+    public void saveOrUpdateChanXian(ChanXian chanxian) {
+            if(StringUtils.isEmpty(chanxian.getId())){
+                this.chanXianMapper.insertSelective(chanxian);
+            }else{
+                this.chanXianMapper.updateByPrimaryKeySelective(chanxian);
+            }
+    }
+
+    @Override
+    public void saveOrUpdateShouXian(ShouXian shouxian) {
+            if(StringUtils.isEmpty(shouxian.getId())){
+                this.shouXianMapper.insertSelective(shouxian);
+            }else{
+                this.shouXianMapper.updateByPrimaryKeySelective(shouxian);
+            }
+    }
+
+
+    @Override
     @Transactional
     public void update(BaoXian baoxian, ShouXian shouxian, ChanXian chanxian) {
         baoxian.setUpdatetime(new Date());
@@ -82,6 +121,7 @@ public class BaoXianServiceImpl  implements BaoXioanService {
         this.chanXianMapper.updateByPrimaryKeySelective(chanxian);
 
     }
+
 
     @Override
     public int auditStatus(String id, String status, String man) {

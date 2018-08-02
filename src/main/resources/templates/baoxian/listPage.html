@@ -41,9 +41,8 @@
             <label class="layui-form-label">报送到</label>
             <div class="layui-input-inline">
                 <select name="reportplace" id="reportplace" lay-verify="required">
-                    <option value="beijing">北京</option>
-                    <option value="shanghai">上海</option>
-                    <option value="shenzhen">深圳</option>
+                    <option value="01">深圳</option>
+                    <option value="02">非深圳</option>
                 </select>
             </div>
         </div>
@@ -75,7 +74,7 @@
         // table
         layui.use('table', function(){
             var pageNum =1;
-            var pageSize=10
+            var pageSize=100
             var listurl ="/baoxian/listAll/"+pageNum+"/"+pageSize
             var table = layui.table;
             table.render({
@@ -118,7 +117,7 @@
             /*重新加载数据表格*/
             var $ = layui.$, active = {
                 reload: function(){
-                    var yearVal = $('#year').val();
+                    var yearVal = $('#chooseYear').val();
                     var monthVal = $('#month').val();
                     var reportplaceVal = $('#reportplace').val();
                     console.log("yearVal="+yearVal+" monthVal="+monthVal+" reportplace="+reportplaceVal);
@@ -133,10 +132,10 @@
             };
 
             /*绑定搜索点击事件*/
-            // $('.demoTable .layui-btn').on('click', function(){
-            //     var type = $(this).data('type');
-            //     active[type] ? active[type].call(this) : '';
-            // });
+             $('.demoTable .layui-btn').on('click', function(){
+                 var type = $(this).data('type');
+                 active[type] ? active[type].call(this) : '';
+             });
 
             // 新增
             $('#addBaoxianBtn').on('click', function(){
@@ -150,8 +149,7 @@
                 console.log("工具栏："+data)
                 console.log(data.status)
                 if(obj.event === 'view'){ //查看
-
-//                    window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=view&id="+data.id;
+                    window.location.href="/baoxian/toAddOrUpdateOrViewOrAudit?addOrUpdateType=view&id="+data.id;
                 } else if(obj.event === 'del'){ //删除
                     layer.confirm('确认要删除此条信息么？', {
                         btn : [ '确定', '取消' ]

@@ -16,8 +16,15 @@ public interface BaoXioanService {
     //保存
     void save(BaoXian baoxian, ShouXian shouxian, ChanXian chanxian);
 
+    void saveOrUpdateBaoXian(BaoXian baoxian);
+
+    void saveOrUpdateChanXian(ChanXian chanxian);
+
+    void saveOrUpdateShouXian(ShouXian shouxian);
+
     //更新
     void update(BaoXian baoxian, ShouXian shouxian, ChanXian chanxian);
+
     //审核状态
     int auditStatus(String id,String status,String man);
 
@@ -38,6 +45,8 @@ public interface BaoXioanService {
 
     ChanXian findChanxianByBxId(String bxid);
 
-
     List<ChanXian> findChanxianListByBxId(String bxid);
+
+
+
 }
